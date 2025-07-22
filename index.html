@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StreamME Project Page</title>
+<!-- Bootstrap -->
+<link href="./css/bootstrap-4.0.0.css" rel="stylesheet">
+</head>
+<body>
+<div id="page_container">
+<header>
+  <div class="jumbotron" >
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="text-center">StreamME: Simplify 3D Gaussian Avatar within Live Stream</h1>
+          </br>
+          <h4 class="text-center" style="color:#930c0c;margin-top: 2; margin-bottom: 2">ACM Siggraph 2025</h2>
+        </br>
+        <p class="text-center"><a href="https://songluchuan.github.io/">Luchuan Song</a><sup>1,2</sup>, <a href="https://yzhou359.github.io/">Yang Zhou</a><sup>2</sup>, <a href="https://zhan-xu.github.io/">Zhan Xu</a><sup>2</sup>, <a href="https://zhouyisjtu.github.io/">Yi Zhou</a><sup>2</sup>,<a href="https://research.adobe.com/person/deepali-aneja/">Deepali Aneja</a><sup>2</sup>, <a href="https://www.cs.rochester.edu/~cxu22/">Chenliang Xu</a><sup>1</sup>
+          <p class="text-center"><sup>1</sup>University of Rochester, <sup>2</sup>Adobe Research
+          </br>
+        </br>
+          <p class="text-center"><a href="https://arxiv.org/abs/xxxxxxxxxxx">[Arxiv]</a><a href="https://xxxxxxxxxxx.github.io/StreamME/">[Code]</a><a href="https://xxxxxxxxxxx/StreamME/">[Video]<a href="https://xxxxxxxxxxx/StreamME/">[FastForward]</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<section>
+
+
+
+  <div class="container">
+    <h2>&nbsp;</h2>
+    <div class="row">
+      <div class="col-lg-14 col-md-14 col-sm-14 text-center offset-xl-0 col-xl-12"> <img src="assets/Teaser.jpg" width="1000" alt=""/>
+        <p>&nbsp;</p>  
+        <p class="text-justify">Figure 1.&nbsp;The <b>StreamME</b> takes live stream (or monocular) video as input to enable rapid 3D head avatar reconstruction. It achieves impressive speed, capturing the basic facial appearance within 10 seconds (PSNR = 21 dB) and reaching high-quality fidelity (PSNR = 26 dB) within 5 minutes, as shown in (a). Notably, StreamME reconstructs facial features through on-the-fly training, allowing simultaneous recording and modeling without the need for pre-cached data (<i>e.g.</i> pre-training model). Additionally, StreamME facilitates real-time animation in (b), toonify in (c) and relighting in (d) (the background light image is shown in bottom right and we move the light position to create shadows on face) from the 5-minute reconstructed appearance, supporting the applications in VR and online conference. Natural face&copy;<i>Xuan Gao et al.</i> (CC BY), and &copy;<i>Wojciech Zielonka et al.</i> (CC BY).</p>
+      <!-- <p>&nbsp;</p>   -->
+    </div>
+  </div>
+  <hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 text-center">
+            <h2>On-The-FLY Reconstruction [Training in Stream]</h2>
+            <p> Left is the ground-truth, Right is the reconstruction appearacne.
+            <p> The input are sampled frame-by-frame from video
+            <p> [The slight stroboscopic noise on the face is because each frame is being trained and iterated parameters]
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 text-center">
+            <video width="1024" height="256" controls>
+                <source src="video_elements/video_1.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+</div>
+<hr>
+
+<div class="container">
+  <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 text-center">
+          <h2>Real-Time Reconstruction/Reenactment within Live-Stream</h2>
+          <p> The input are sampled frame-by-frame from video
+          <p> [The slight stroboscopic noise on the face is because each frame is being trained and iterated parameters]
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 text-center">
+        <div style="text-align: center;">
+                    <div style="margin-top: 10px;">
+                      <button class="speedBtn" data-speed="1.0" style="padding: 10px 15px; font-size: 14px; border: none; background-color: #6C757D; color: white; border-radius: 5px; cursor: pointer; margin-right: 10px;">1x Speed</button>
+                      <button class="speedBtn" data-speed="2.0" style="padding: 10px 15px; font-size: 14px; border: none; background-color: #007BFF; color: white; border-radius: 5px; cursor: pointer; margin-right: 10px;">2x Speed</button>
+                      <button class="speedBtn" data-speed="4.0" style="padding: 10px 15px; font-size: 14px; border: none; background-color: #28A745; color: white; border-radius: 5px; cursor: pointer; margin-right: 10px;">4x Speed</button>
+                      <button class="speedBtn" data-speed="8.0" style="padding: 10px 15px; font-size: 14px; border: none; background-color: #DC3545; color: white; border-radius: 5px; cursor: pointer;">8x Speed</button>
+                  </div>
+
+          <video id="videoPlayer" width="972" height="486" controls>
+              <source src="video_elements/video_6.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+          <br>
+
+      </div>
+      
+      <script>
+          document.addEventListener('DOMContentLoaded', () => {
+              const videoPlayer = document.getElementById('videoPlayer');
+              const speedButtons = document.querySelectorAll('.speedBtn');
+      
+              speedButtons.forEach(button => {
+                  button.addEventListener('click', () => {
+                      const speed = parseFloat(button.getAttribute('data-speed')); 
+                      videoPlayer.playbackRate = speed; 
+                      videoPlayer.play(); 
+                  });
+              });
+          });
+      </script>
+      
+      </div>
+  </div>
+</div>
+<hr>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 text-center">
+        <h2>Abstract</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 text-center  offset-xl-0 col-xl-12">
+        <p class="text-justify"><em>
+          We propose <b>StreamME</b>, a method focuses on ultra-fast 3D avatar reconstruction. 
+          The StreamME synchronously records and reconstructs a head avatar from live video streams without any pre-cached data, 
+          enabling seamless integration of the reconstructed appearance into downstream applications. 
+          This exceptionally fast training strategy, which we refer to as on-the-fly training, is central to our approach. 
+          Our method is built upon 3D Gaussian Splatting (3DGS), 
+          eliminating the reliance on MLPs in deformable 3DGS and relying solely on geometry, 
+          which significantly improves the adaptation speed to facial expression motion. 
+          To further ensure high efficiency in on-the-fly training, we introduced a simplification strategy based on primary points, 
+          which distributes the point clouds more sparsely across the facial surface, 
+          optimizing points number while maintaining rendering quality. 
+          Leveraging the on-the-fly training capabilities, 
+          our method protects the facial privacy and reduces communication bandwidth in VR system or online conference. 
+          Additionally, it can be directly applied to downstream appliaction such as animation, toonify, and relighting.</em></p>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 text-center">
+        <h2>Overview </h2>
+        <!-- <p>&nbsp;</p> -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 text-center offset-xl-1 col-xl-10"> <img src="assets/pipeline.jpg" width="850" alt=""/>
+        <!-- <p>&nbsp;</p> -->
+        <p class="text-justify">Figure 2.&nbsp;The overview the pipeline of <b>StreamME</b>. 
+          We list three components at here. i) The 3DGS Properties Warming-Up (Optional): 
+          we introduce two auxiliary learnable 3D Gaussian attribute texture and illumination, 
+          refining the UV vertex positions to improve facial geometry detail 
+          (<i>e.g.</i> here, we show the coarse displacement for the vertices around the hair). 
+          This step is optional, and the users may also opt to use the tracked head without displacement. 
+          ii) Anchor Duplication and Simplification: we freeze the Tex and SH attributes and introduce a binary learnable mask, 
+          initialized with all values set to 1, 
+          from the UV vertices sampled on the mesh. Natural face&copy;<i>Xuan Gao et al.</i> (CC BY).</p>
+        <p>&nbsp;</p>
+        <!-- <p>&nbsp;</p> -->
+
+        <img src="assets/simply.jpg" width="850" alt=""/>
+          <!-- <p>&nbsp;</p> -->
+          <p class="text-justify">Figure 3.&nbsp;We employ the proposed <i><b>Idx</b></i> for anchor binding, 
+            elimination the motion irrelevant points and simplification the over-small size/opacity points to 
+            reduce computational overhead. 
+            (a) The anchor points are sampled from the mesh and multiple duplicated for detail representation. 
+            (b) The motion-aware <i><b>Idx</b></i> tends to remove points, as there are none motion gradients around the 
+            forehead in canonical space. (c) The learnable masks from <i><b>Idx</b></i> for deleting the small size and opacity 
+            points within training. Please zoom-in for details. Natural face&copy;<i>Xuan Gao et al.</i> (CC BY).</p>
+          <!-- <p>&nbsp;</p> -->
+          <!-- <p>&nbsp;</p> -->
+
+      </div>
+    </div>
+    <hr>
+
+
+    <div class="row">
+      <div class="col-lg-12 mb-4 mt-2 text-center">
+        <h2>Demo Video</h2>
+        [The demo video for StreamME, which contains subtitles and dubbing. Please turn up the volume for better experience]
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 text-center">
+          <video 
+              width="960" 
+              height="540" 
+              controls 
+              style="border: 0px solid black; border-radius: 5px; box-shadow: 0 10px 50px rgba(0, 0, 0, 0.2);">
+              <source src="demo_video/StreamME_366.mp4" type="video/mp4">
+          </video>
+      </div>
+  </div>
+  
+  <hr>
+
+
+
+
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 text-center">
+        <h2>Applications </h2>
+        <!-- <p>&nbsp;</p> -->
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 text-center">
+        <p>[We apply different text prompts for texture editing. The algorithm comes from <a
+          href="https://songluchuan.github.io/TextToon/">TextToon</a>]</p>
+        <div style="display: flex; justify-content: center; gap: 20px;">
+          <video width="460" height="231" controls>
+            <source src="video_elements/video_editing_1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <video width="460" height="231" controls>
+            <source src="video_elements/video_editing_2.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+
+  </br>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 text-center">
+        <p>[We apply the offset to the geometry, with the original tracked head displayed in the middle as reference]</p>
+        <div style="display: flex; justify-content: center; gap: 20px;">
+          <video width="462" height="231" controls>
+            <source src="video_elements/video_editing_3.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <video width="462" height="231" controls>
+            <source src="video_elements/video_editing_4.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+  </div>
+
+
+  </br>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 text-center">
+      <p>[Eyeball Animation]</p>
+      <div style="display: flex; justify-content: center; gap: 20px;">
+        <video width="600" height="250" controls>
+          <source src="video_elements/video_eyes.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+  </div>
+
+<!-- </br>
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 text-center">
+    <p>[The StreamME enables relighting of dynamic portraits. The light source is estimated from given image]</p>
+    <div style="display: flex; justify-content: center; gap: 20px;">
+      <video width="462" height="231" controls>
+        <source src="video_elements/video_relight_2.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <video width="462" height="231" controls>
+        <source src="video_elements/video_relight_1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+</div> -->
+
+    
+  
+
+  
+  
+  
+
+    <hr>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 text-center">
+        <h2>Point Cloud Visualization</h2>
+        <!-- <p>&nbsp;</p> -->
+        <p>[We use MeshLab at here for visualization]</p>
+        <p>From left to right: without <b>Idx</b> and <b>Simplification</b>, only with <b>Idx</b>, and with both <b>Idx</b> and <b>Simplification</b>.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 text-center">
+          <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+              <div style="text-align: center;">
+                  <video width="266" height="379" controls>
+                      <source src="video_elements/rot1.mp4" type="video/mp4">
+                      Your browser does not support the video tag.
+                  </video>
+                  <p><a href="assets/pcs-baseline.ply" download="pcs-base.ply" style="font-size: 15px; color: blue; text-decoration: underline;">[Download Point-Cloud]</a></p>
+              </div>
+  
+              <div style="text-align: center;">
+                  <video width="266" height="379" controls>
+                      <source src="video_elements/rot2.mp4" type="video/mp4">
+                      Your browser does not support the video tag.
+                  </video>
+                  <p><a href="assets/pcs-idx.ply" download="pcs-idx.ply" style="font-size: 15px; color: blue; text-decoration: underline;">[Download Point-Cloud]</a></p>
+              </div>
+  
+              <div style="text-align: center;">
+                  <video width="266" height="379" controls>
+                      <source src="video_elements/rot3.mp4" type="video/mp4">
+                      Your browser does not support the video tag.
+                  </video>
+                  <p><a href="assets/psc-ours.ply" download="pcs-final.mp4" style="font-size: 15px; color: blue; text-decoration: underline;">[Download Point-Cloud]</a></p>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+
+
+    
+    <!-- <hr>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 text-center">
+        <h2>Technical Report</h2>
+      </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 text-center"> <a href="assets/paper.pdf"><img src="assets/TechReport.jpg" width="1000" alt=""/></a>
+    </div> -->
+    <hr>
+
+
+
+
+  
+  <div class="row">
+    <div class="col-lg-12 mb-4 mt-2 text-center">
+      <h2>BibTex</h2>
+    </div>
+  </div>
+  <pre style="background-color: rgb(245, 245, 245); padding: 15px; border-radius: 0px; display: flex; align-items: center; justify-content: flex-start; height: 165px; text-align: left; max-width: 1000px; margin: auto;">
+    <code>@article{song2025Stream,
+      title={StreamME: Simplify 3D Gaussian Avatar within Live Stream},
+      author={Luchuan Song, Yang Zhou, ZHan Xu, Yi Zhou, Deepali Aneja, Chenliang Xu},
+      journal={SIGGRAPH},
+      year={2025},
+      publisher={ACM New York, NY, USA}
+      }</code>
+  </pre>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+</section>
+
+
+<header>
+  <div class="jumbotron" >
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+        <p class="text-center">Our website template comes from <a
+          href="https://zhangyux15.github.io/ProxyCapV2/">ProxyCap</a> and is modified based on it. Thanks to the authors for providing beautiful icons.
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+
+
+</body>
+</html>
